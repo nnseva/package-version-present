@@ -38,7 +38,7 @@ environment variables if you would like to use this example in your pipeline:
             name: Check the local version presence on the custom pypi repo
             image: snakepacker/python:all
             script:
-                - pip install package-version-present
+                - python3.8 -mpip install package-version-present
                 - package-version-present `python setup.py --name` `python setup.py --version` -R $PYPI_REPOSITORY_URL -U $PYPI_USERNAME -P "$PYPI_PASSWORD" -T -X
 ```
 
