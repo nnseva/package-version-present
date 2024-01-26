@@ -33,3 +33,9 @@ Notice that the script uses only built-in packages and doesn't need any addition
 The script is self-descriptive, call it without parameters to see the help.
 
 The script uses PyPi simple API, and is adopted to process the both, XML-based, as well as HTML based result.
+
+After installation, run the following command in the command line to see the detailed help:
+
+```bash
+package-version-present
+```
