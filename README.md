@@ -1,5 +1,19 @@
 # Utility to check presence of the package in the PyPi-like repository
 
+## Installation
+
+*Stable version* from the PyPi package repository
+```bash
+pip install package-version-present
+```
+
+*Last development version* from the GitHub source version control system
+```
+pip install git+git://github.com/nnseva/package-version-present.git
+```
+
+## Using
+
 Additionally to the central PyPi repository at https://pypi.org, you can use
 your own custom PyPi-like private repository in your project.
 
