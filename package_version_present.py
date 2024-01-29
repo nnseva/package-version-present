@@ -12,7 +12,7 @@ from html import parser
 from urllib import parse as url_parse, request
 
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 __all__ = [
     '__version__',
@@ -154,7 +154,7 @@ class PackageHandler(parser.HTMLParser):
         if tag == 'a':
             named = dict([pair if len(pair) == 2 else (pair, None) for pair in attrs])
             if 'href' in named:
-                if '%s-%s' % (self.options.package_name, self.options.version) in named['href']:
+                if '/%s-%s.' % (self.options.package_name, self.options.version) in named['href']:
                     self.found = True
 
 

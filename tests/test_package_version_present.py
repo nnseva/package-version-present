@@ -269,3 +269,71 @@ class Test(unittest.TestCase):
             ret = package_version_present.main(['package_version_present_test', 'a', '0.0.1a2', '-T'])
         self.assertEqual(ret, 1)
         self.assertEqual(stdout.getvalue().strip(), 'FALSE')
+
+    def test_presize_versions(self):
+        """Test presize versions with different parts"""
+        with mock.patch('urllib.request.OpenerDirector.open', mock.MagicMock(
+            return_value=mock.MagicMock(
+                read=mock.MagicMock(return_value=b'''
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="pypi:repository-version" content="1.1">
+    <title>Links for a</title>
+  </head>
+  <body>
+    <h1>Links for a</h1>
+    <a href="https://files.pythonhosted.org/packages/a4/XX/a-0.0.1a1.tar.gz" >a-0.0.1a1.tar.gz</a><br />
+  </body>
+</html>
+<!--SERIAL 21585523-->
+                ''')
+            )
+        )) as cp:
+            ret = package_version_present.main(['package_version_present_test', 'a', '0.0.1a'])
+        cp.assert_called_with('https://pypi.org/simple/a/')
+        self.assertEqual(ret, 1)
+
+        with mock.patch('urllib.request.OpenerDirector.open', mock.MagicMock(
+            return_value=mock.MagicMock(
+                read=mock.MagicMock(return_value=b'''
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="pypi:repository-version" content="1.1">
+    <title>Links for a</title>
+  </head>
+  <body>
+    <h1>Links for a</h1>
+    <a href="https://files.pythonhosted.org/packages/a4/XX/a-0.0.1a1.tar.gz" >a-0.0.1a1.tar.gz</a><br />
+  </body>
+</html>
+<!--SERIAL 21585523-->
+                ''')
+            )
+        )) as cp:
+            ret = package_version_present.main(['package_version_present_test', 'a', '0.0.1a11'])
+        cp.assert_called_with('https://pypi.org/simple/a/')
+        self.assertEqual(ret, 1)
+
+        with mock.patch('urllib.request.OpenerDirector.open', mock.MagicMock(
+            return_value=mock.MagicMock(
+                read=mock.MagicMock(return_value=b'''
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="pypi:repository-version" content="1.1">
+    <title>Links for a</title>
+  </head>
+  <body>
+    <h1>Links for a</h1>
+    <a href="https://files.pythonhosted.org/packages/a4/XX/a-0.0.1a1.tar.gz" >a-0.0.1a1.tar.gz</a><br />
+  </body>
+</html>
+<!--SERIAL 21585523-->
+                ''')
+            )
+        )) as cp:
+            ret = package_version_present.main(['package_version_present_test', 'a', '.0.1a1'])
+        cp.assert_called_with('https://pypi.org/simple/a/')
+        self.assertEqual(ret, 1)
