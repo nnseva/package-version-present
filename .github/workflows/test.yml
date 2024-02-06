@@ -43,3 +43,7 @@ jobs:
         TOXENV: ${{ matrix.toxenv }}
       run: |
         tox
+    - name: Self check
+      run: |
+        pip install .
+        package-version-present `python setup.py --name` `python setup.py --version` -T -X
